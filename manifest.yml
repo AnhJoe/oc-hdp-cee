@@ -1,0 +1,23 @@
+modules:
+  macro:
+    - key: aar-generate-form-macro
+      resource: main
+      resolver:
+        function: resolver
+      title: Generate Evaluation Form
+      description: Generate an AAR evaluation form for this exercise
+  function:
+    - key: resolver
+      handler: index.handler
+permissions:
+  scopes:
+    - read:page:confluence
+resources:
+  - key: main
+    path: static/cee/build
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/cc38d9bc-ca04-4731-8cae-056d4a0160a7
