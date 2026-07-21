@@ -18,13 +18,13 @@ Build & Testing Phases:
 1) Proof of concept (done) - macro button calls a resolver that fetches basic page metadata (id, title, status)
    from the Exercise Designer page via Confluence API, confirming the macro, resolver, and permissions wiring
    all work end to end.
-2) Page body extraction (in progress) - resolver now requests the page body in Atlas Document Format (ADF) and
+2) Page body extraction (done) - resolver now requests the page body in Atlas Document Format (ADF) and
    returns it to the macro, which renders the raw ADF tree so we can see how the Exercise Designer's metadata and
    capability/objective selections are actually structured in the content. This drives the extraction logic in the
    next phase.
-3) Metadata & capability extraction (next) - replace the raw ADF dump with real parsing logic that walks the ADF
+3) Metadata & capability extraction (done) - replace the raw ADF dump with real parsing logic that walks the ADF
    tree and pulls out exercise metadata and selected CDC PHEP capabilities/RRF priority areas into a clean object.
-4) Form generation pipeline (planned) - query the Confluence question bank for the selected capabilities, merge
+4) Form generation pipeline (in progress) - query the Confluence question bank for the selected capabilities, merge
    their questions into one Forms design JSON, and call the Forms REST API to create the form template.
 5) Request type publishing (planned) - create/publish the request type on the AIF service desk portal following
    the pooled request type + exercise-identity-in-form-fields pattern, and return the link to the instructor.
