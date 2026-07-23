@@ -39,7 +39,7 @@ JSM service desk portal for participants to complete.
 3) Create and publish that form as a new service desk request type via the Atlassian Forms REST API, named
    per exercise ("AAR - [Exercise Name] - [Date]"), and return a direct link to instructors.
 
-# Standing up an independent app on your Developer Space:
+# Standing up an independent app:
 This repo currently deploys to one specific Forge app registration, tied to whoever ran `forge register` for
 it (the `id:` field in manifest.yml). App IDs aren't transferable between Atlassian accounts, so if you're not
 collaborating directly on that existing app, you'll need your own independent app before any of 
@@ -60,7 +60,7 @@ Forge apps also come with development/staging/production environments by default
 development`), so you can iterate against your site without touching whatever install real users see.
 See https://developer.atlassian.com/platform/forge/getting-started/ for more details.
 
-# Setup for your own site:
+## Setup for your own site:
 This app was built and tested against a specific Confluence/JSM site, JSM project, and a small pool of
 pre-created request types - none of that is portable as-is. Getting it running on a new site takes four things:
 1) Deploy and install the app. Standard Forge workflow: `forge login`, `forge deploy`, then
@@ -93,6 +93,30 @@ pre-created request types - none of that is portable as-is. Getting it running o
    - SITE_BASE_URL/PORTAL_ID/GROUP_ID - used only to build direct customer-portal links back to a created
      form; PORTAL_ID and GROUP_ID come from the same servicedesk/requesttype lookup above.
    See function map items 20, 21, and 21a below for exactly what each constant does.
+
+## Adding the macro to a Confluence page:
+Once the app is deployed and installed on a site, it still needs to be placed on the actual
+Exercise Designer page before it'll do anything - installing the app does not add it to any page automatically.
+1) Open the Exercise Designer page in Confluence and click "Edit" (or create a new page for this if none
+   exists yet).
+2) Place the cursor where you want the macro's button to appear, then either type `/` to open the insert
+   menu or click the "+" (Insert) button in the editor toolbar.
+3) Search for "Generate Evaluation Form" (the macro's title, set in manifest.yml under modules.macro) and
+   select it. It'll drop into the page as a small macro block.
+4) Publish the page. The macro now renders its "Create Form" button and "Request Type Status" list right on
+   that page, reading whatever metadata/capabilities/question bank content exists at the time someone clicks
+   Create Form.
+The macro can be added to more than one page, but each one reads its own page's metadata/capabilities table
+independently - there's no cross-page state beyond the shared request type tracker (which is global, not
+per-page, since it tracks the shared pool of request types across all exercises).
+
+## Example pages (Exercise Designer & Question Bank):
+Read-only, view-only share links to a working Exercise Designer page and AAR Question Bank page, for reference
+on the table structure/section layout described above. These are Confluence's public "share via link" links -
+they're anonymous and view-only by design, not an editing surface, so use them just to see the expected shape
+of each page.
+1) Exercise Designer example: https://ochdp-test.atlassian.net/wiki/external/YmNhMzViNmJkYmE5NDFiYTgxMzM0MzZkNGEwMDE4MDY
+2) AAR Question Bank example: https://ochdp-test.atlassian.net/wiki/external/OGIxZDE5ZGY5OWYzNDg4NGFiZGMyYWUxYzliMTM0ZDc
 
 ## Request type provisioning (why request types are pre-created manually):
 The original plan was to have the app itself create a portal group and a request type per exercise through the
