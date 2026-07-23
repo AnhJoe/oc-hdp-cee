@@ -12,6 +12,11 @@ modules:
 permissions:
   scopes:
     - read:page:confluence
+    - storage:app
+  external:
+    fetch:
+      backend:
+        - address: https://api.atlassian.com
 resources:
   - key: main
     path: static/cee/build
